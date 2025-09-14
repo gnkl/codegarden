@@ -76,9 +76,7 @@ class Corner:
         return (is_x_same + is_y_same + is_z_same) == 2
     
     def move_corner(self, orientation: EightInts) -> "Corner":
-        after_move = Corner.from_int(orientation[self.to_int()])
-        breakpoint()
-        return after_move
+        return Corner.from_int(orientation[self.to_int()])
 
 
 all_corners = [
@@ -117,7 +115,7 @@ class Edge:
     def nbr(self, other):
         if self == other:
             return False
-        return self.c1 == other.c1 or self.c2 == other.c2  
+        return self.c1 == other.c1 or self.c1 == other.c2 or self.c2 == other.c1 or self.c2 == other.c2
     
     def move_edge(self, orientation: EightInts) -> "Edge":
         c1_moved = self.c1.move_corner(orientation)
@@ -234,18 +232,19 @@ class Cube:
 
     
 
-solution_cubes: list[Cube] = []
-total_cubes_checked = 0
-for r in range(0, len(all_edges) + 1):
-    for edges_subset in combinations(all_edges, r):
-        total_cubes_checked += 1
-        cube = Cube(list(edges_subset))
-        if not cube.is_connected() or not cube.is_3d():
-            continue
-        if any(cube.is_rot_equivalent(existing_cube) for existing_cube in solution_cubes):
-            continue
-        solution_cubes.append(cube)
+if __name__ == "__main__":
+    solution_cubes: list[Cube] = []
+    total_cubes_checked = 0
+    for r in range(0, len(all_edges) + 1):
+        for edges_subset in combinations(all_edges, r):
+            total_cubes_checked += 1
+            cube = Cube(list(edges_subset))
+            if not cube.is_connected() or not cube.is_3d():
+                continue
+            if any(cube.is_rot_equivalent(existing_cube) for existing_cube in solution_cubes):
+                continue
+            solution_cubes.append(cube)
 
 
-print(f"Checked {total_cubes_checked} cubes (should be 2^{len(all_edges)} = {2**len(all_edges)})")
-print(f"Found {len(solution_cubes)} distinct solutions")
+    print(f"Checked {total_cubes_checked} cubes (should be 2^{len(all_edges)} = {2**len(all_edges)})")
+    print(f"Found {len(solution_cubes)} distinct solutions")
