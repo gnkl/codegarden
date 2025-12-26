@@ -158,9 +158,8 @@ def test_sudoku_solver(sudoku_input, expected_output):
     assert solved_output == expected_output.strip()
 
 
-# these puzzles need more advanced techniques to solve (like trial and backtracking, invisible number technique, etc.)
 @pytest.mark.parametrize(
-    "sudoku_input",
+    "sudoku_input, expected_output",
     [
         (
             """
@@ -173,8 +172,30 @@ def test_sudoku_solver(sudoku_input, expected_output):
 56..8....
 ...4...5.
 1.8...6.2
-"""
+""",
+            """
+675138429
+314295786
+892647135
+781564293
+236879514
+459321867
+563782941
+927416358
+148953672
+""",
         ),
+    ],
+)
+def test_advanced_sudoku_solver(sudoku_input, expected_output):
+    solved_output = write_sudoku(solve_sudoku(read_sudoku(sudoku_input)))
+    assert solved_output == expected_output.strip()
+
+
+# these puzzles need more advanced techniques to solve (like trial and backtracking, invisible number technique, etc.)
+@pytest.mark.parametrize(
+    "sudoku_input",
+    [
         (
             """
 ....27...
