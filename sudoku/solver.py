@@ -106,8 +106,8 @@ def solve_sudoku(sudoku: list[list[int | None]]) -> list[list[int]]:
 
         # if no progress, try advanced technique
         # check for groups with cells with exact common sets (and remove possiblities from other cells in the group)
+        print("Trying constrained set technique...")
         for group in get_all_groups():
-
             combos = {}
             for r, c in group:
                 tup = tuple(
@@ -144,15 +144,15 @@ def solve_sudoku(sudoku: list[list[int | None]]) -> list[list[int]]:
 
 if __name__ == "__main__":
     example = """\
-67..38429
-314.95.86
-..2.47...
-..1.6....
-.3.8..5.4
-...32..67
-56..8....
-...4...5.
-1.8...6.2
+..43...8.
+...6....9
+.619.....
+.2.49....
+5.3...9..
+....62..3
+3....4568
+78.....4.
+.........
 """
     print("Input Sudoku:")
     print(example.strip().replace(" ", ""))
